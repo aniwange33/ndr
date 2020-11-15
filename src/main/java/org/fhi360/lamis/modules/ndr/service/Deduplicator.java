@@ -301,8 +301,9 @@ public class Deduplicator {
         });
 
         //Remove duplicates from Laboratory
-        String labQuery = "select FACILITY_ID, PATIENT_ID, DATE_RESULT_RECEIVED, count(*) from LABORATORY "
-                + "group by FACILITY_ID, PATIENT_ID, LABTEST_ID, DATE_RESULT_RECEIVED having count(*) > 1";
+        String labQuery = "select FACILITY_ID, PATIENT_ID, jsonb_array_elements(l.lines)->>'lab_test_id' lab_test_id, " +
+                "DATE_RESULT_RECEIVED, count(*) from LABORATORY l group by FACILITY_ID, PATIENT_ID," +
+                "jsonb_array_elements(l.lines)->>'lab_test_id',DATE_RESULT_RECEIVED having count(*) > 1";
         ids = jdbcTemplate.query(labQuery, (rs, i) -> {
             Long facilityId = rs.getLong("facility_id");
             Long patientId = rs.getLong("patient_id");

@@ -57,7 +57,8 @@ public class LaboratoryReportTypeMapper {
                     if (dateCollected != null) {
                         try {
                             laboratory.setCollectionDate(DateUtil.getXmlDate(dateCollected));
-                            labResult.setOrderedTestDate(DateUtil.getXmlDate(dateAssay));
+                            if(dateAssay != null)labResult.setOrderedTestDate(DateUtil.getXmlDate(dateAssay));
+                            else labResult.setOrderedTestDate(DateUtil.getXmlDate(rs.getDate("date_result_received")));
                         } catch (DatatypeConfigurationException e) {
                             e.printStackTrace();
                         }

@@ -19,8 +19,8 @@ public class MessageHeaderTypeMapper {
             //Set the Sending Organization in the Header
             //In this scenario we are using a fictional IP
             FacilityType sendingOrganization = new FacilityType();
-            sendingOrganization.setFacilityName("Family Health International");
-            sendingOrganization.setFacilityID("FHI360");
+            sendingOrganization.setFacilityName("FHI360 EPIC");
+            sendingOrganization.setFacilityID("FHI360_EPIC");
             sendingOrganization.setFacilityTypeCode("IP");
             header.setMessageSendingOrganization(sendingOrganization);
         } catch (Exception exception) {

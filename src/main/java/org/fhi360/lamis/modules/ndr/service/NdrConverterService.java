@@ -208,7 +208,7 @@ public class NdrConverterService {
             File file = new File(applicationProperties.getTempDir() + BASE_DIR + "temp/" + facilityId + "/" + fileName);
 
             jaxbMarshaller.marshal(container, file);
-
+            LOG.info("file marshalled:  {}",   fileName);
             //Log the particulars of message generated into the message log table
             MessageLog messageLog = new MessageLog(messageId.get(), identifier, fileName, LocalDateTime.now());
             saveMessageLog(messageLog);
@@ -220,7 +220,7 @@ public class NdrConverterService {
 
     public void saveMessageLog(MessageLog messageLog) {
         messageLogRepository.save(messageLog);
-        LOG.info("added to messageLog {}",  messageLog.getIdentifier());
+        LOG.info("added to messageLog {}",   messageLog.getIdentifier());
     }
 
     private String zipFiles(long facilityId) {

@@ -95,7 +95,7 @@ public class NdrConverterService {
         AtomicInteger patient = new AtomicInteger();
         ExecutorService executorService = Executors.newFixedThreadPool(2);
         patients.forEach((key, value) -> {
-            String identifier = Long.toString(facilityId).concat("_").concat(StringUtils.trim(key));
+            String identifier = StringUtils.trim(key).concat(Long.toString(facilityId));
             //Get the last message status
             String statusCode = "INITIAL";
             if (!messageLogRepository.findByIdentifier(identifier).isEmpty()) {
@@ -212,6 +212,7 @@ public class NdrConverterService {
             //Log the particulars of message generated into the message log table
             MessageLog messageLog = new MessageLog(messageId.get(), identifier, fileName, LocalDateTime.now());
             saveMessageLog(messageLog);
+
         } catch (Exception exception) {
             exception.printStackTrace();
         }
@@ -219,6 +220,7 @@ public class NdrConverterService {
 
     public void saveMessageLog(MessageLog messageLog) {
         messageLogRepository.save(messageLog);
+        LOG.info("added to messageLog {}",  messageLog.getIdentifier());
     }
 
     private String zipFiles(long facilityId) {
